@@ -1,14 +1,16 @@
+let c = 'Red';
+
 function setup() {
   createCanvas(1000, 1000);
   background(235);
 }
 
-let c = 'Red';
 function draw() {
   currentColor();
   stroke(0);
   strokeWeight(1);
 
+  //Different color selection
   fill('Red');
   rect(5, 5, 20, 20);
   fill('Orange');
@@ -30,7 +32,7 @@ function draw() {
   fill(0);
   rect(5, 194, 20, 20);
   
-
+  //drawing
   if(mouseIsPressed && (mouseX > 25 || mouseY > 215))
   {
     stroke(c);
@@ -40,6 +42,7 @@ function draw() {
   }
 }
 
+//switches the color you draw with
 function currentColor()
 {
   if(mouseIsPressed && mouseX > 5 && mouseX < 25)
