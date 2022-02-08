@@ -26,29 +26,29 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(1900, 900);
+  createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  let min = 40;
+  let maxX = width-40;
+  let maxY = height-40;
 
-  guy = new Charachter(guySpriteSheet, 300, 300);
-  guy2 = new Charachter(guySpriteSheet, 750, 350);
-  guy3 = new Charachter(guySpriteSheet, 1500, 80);
-  girl = new Charachter(girlSpriteSheet, 950, 600);
-  girl2 = new Charachter(girlSpriteSheet, 1600, 250);
-  girl3 = new Charachter(girlSpriteSheet, 475, 125);
-  van = new Charachter(vanSpriteSheet, 450, 450);
-  van2 = new Charachter(vanSpriteSheet, 1300, 200);
-  van3 = new Charachter(vanSpriteSheet, 1450, 600);
-  yellow = new Charachter(yellowSpriteSheet, 280, 575);
-  yellow2 = new Charachter(yellowSpriteSheet, 1200, 80);
-  yellow3 = new Charachter(yellowSpriteSheet, 1050, 400);
-  meat = new Charachter(meatSpriteSheet, 850, 100);
-  meat2 = new Charachter(meatSpriteSheet, 1500, 400);
-  meat3 = new Charachter(meatSpriteSheet, 600, 550);
-}
 
-function keyReleased()
-{
-  sx = 0;
+  //all of the sprites that appear
+  guy = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
+  guy2 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
+  guy3 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
+  girl = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
+  girl2 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
+  girl3 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
+  van = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
+  van2 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
+  van3 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
+  yellow = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
+  yellow2 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
+  yellow3 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
+  meat = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
+  meat2 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
+  meat3 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
 }
 
 function draw() {
@@ -89,6 +89,7 @@ class Charachter
     scale(this.facing, 1);
     image(this.spriteSheet, 0, 0, 75, 75, 80 * this.sx, 0, 80, 80);  
   
+    //hold arrow keys to move and a release to reset animation
     if(keyIsDown(RIGHT_ARROW) && frameCount %3 == 0)
     {
       this.sx = (this.sx + 1) % 8;
