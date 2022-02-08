@@ -34,21 +34,21 @@ function setup() {
 
 
   //all of the sprites that appear
-  guy = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
-  guy2 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
-  guy3 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY));
-  girl = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
-  girl2 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
-  girl3 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY));
-  van = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
-  van2 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
-  van3 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY));
-  yellow = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
-  yellow2 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
-  yellow3 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY));
-  meat = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
-  meat2 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
-  meat3 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY));
+  guy = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  guy2 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  guy3 = new Charachter(guySpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  girl = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY),random(3, 6));
+  girl2 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  girl3 = new Charachter(girlSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  van = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  van2 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  van3 = new Charachter(vanSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  yellow = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  yellow2 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  yellow3 = new Charachter(yellowSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  meat = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  meat2 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
+  meat3 = new Charachter(meatSpriteSheet, random(min, maxX), random(min, maxY), random(3, 6));
 }
 
 function draw() {
@@ -74,13 +74,14 @@ function draw() {
 class Charachter
 {
 
-  constructor(spriteSheet, x, y)
+  constructor(spriteSheet, x, y, speed)
   {
     this.spriteSheet = spriteSheet;
     this.sx = 0;
     this.x = x; 
     this.y = y;
     this.facing = 1;
+    this.speed = speed;
   }
   
   draw() {
@@ -93,20 +94,31 @@ class Charachter
     if(keyIsDown(RIGHT_ARROW) && frameCount %3 == 0)
     {
       this.sx = (this.sx + 1) % 8;
-      this.x += 3;
+      this.x += this.speed;
       this.facing = 1;
     }
     else if(keyIsDown(LEFT_ARROW) && frameCount %3 == 0)
     {
   
       this.sx = (this.sx + 1) % 8;
-      this.x -= 3;
+      this.x -= this.speed;
       this.facing = -1;
     }
     else if(! (keyIsDown(RIGHT_ARROW) || keyIsDown(LEFT_ARROW)))
     {
       this.sx = 0;
     }
+
+    //wrap around when the sprites leave the canvas
+    if(this.x > width + 20)
+    {
+      this.x = -20;
+    }
+    if(this.x < -20)
+    {
+      this.x = width + 20;
+    }
+
 
     pop();
   }
