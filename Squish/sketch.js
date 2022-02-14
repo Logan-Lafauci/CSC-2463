@@ -93,7 +93,6 @@ class Bug
     this.sx = 0;
     this.x = x; 
     this.y = y;
-    this.currentAngle = 0;
     this.horizontal = horizontal;
     this.vertical = vertical;
     this.alive = true;
@@ -118,50 +117,54 @@ class Bug
     }
   }
 
-  draw() {
-    push();
-    angleMode(DEGREES);
-    translate(this.x, this.y);
-
-    //figures out the direction the bug should be facing. Can return to later to figure out a way for more precise facing directions
+  //figures out the direction the bug should be facing. Can return to later to figure out a way for more precise facing directions
+  angle()
+  {
     if(this.horizontal > 0)
     {
       if(this.vertical > 0.2)
-        this.currentAngle = 135;
+        return 135;
       else if (this.vertical < -0.2)
-        this.currentAngle = 45;
+        return 45;
       else 
-        this.currentAngle = 90;
+        return 90;
     }
     else if(this.horizontal < 0)
     {
       if(this.vertical > 0.2)
-        this.currentAngle = 225;
+        return 225;
       else if (this.vertical < -0.2)
-        this.currentAngle = 315;
+        return 315;
       else 
-        this.currentAngle = 270;
+        return 270;
     }
-    rotate(this.currentAngle);
+    return 0;
+  }
+
+  draw() {
+    push();
+    angleMode(DEGREES);
+    translate(this.x, this.y);
+    rotate(this.angle());
     this.animate();
 
     //change moving direction when hitting a wall
-    if(this.x > width-20)
+    if(this.x > width-20 && this.alive)
     {
       this.horizontal = -1;
       this.vertical = random(-1, 1);
     }
-    if(this.x < 20)
+    if(this.x < 20 && this.alive)
     {
       this.horizontal = 1;
       this.vertical = random(-1, 1);
     }
-    if(this.y > height-20)
+    if(this.y > height-20 && this.alive)
     {
       this.vertical = -1;
       this.horizontal = random(direction);
     }
-    if(this.y < 20)
+    if(this.y < 20 && this.alive)
     {
       this.vertical = 1;
       this.horizontal = random(direction);
