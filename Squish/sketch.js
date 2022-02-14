@@ -42,7 +42,7 @@ function draw() {
   if(gameState == "wait")
   {
     textSize(30);
-    text('Press any key to start', (width/2 - 150) , 300);
+    text('Click to start', (width/2 - 150) , 300);
     if(mouseIsPressed){
       startTime = millis();
       gameState = "playing";
