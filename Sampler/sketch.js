@@ -1,9 +1,9 @@
 let sounds = new Tone.Players(
   {
-    'snare': '/sample/snare.wav',
-    'kick': '/sample/kick.wav',
-    'hat': '/sample/hi-hat.wav',
-    'clap': '/sample/clap.wav'
+    'snare': 'sample/snare.wav',
+    'kick': 'sample/kick.wav',
+    'hat': 'sample/hi-hat.wav',
+    'clap': 'sample/clap.wav'
   }
 );
 let button1;
