@@ -1,13 +1,7 @@
 const synth = new Tone.AMSynth().toDestination();
 const reverb = new Tone.JCReverb(0).toDestination();
-const osc = new Tone.OmniOscillator("C#4", "pwm").start();
-const ampEnv = new Tone.AmplitudeEnvelope({
-  attack: 0.1,
-  decay: 0.2,
-  sustain: 1.0,
-  release: 0.8
-}).toDestination();
 
+//all letter keys make a sound
 let notes = {
   'q': 'G2',
   'w': 'A2',
@@ -37,17 +31,13 @@ let notes = {
   'm': 'D6'
 }
 
+//setting up dials and the base value
 let reverbDial;
 reverb.roomSize.value = 0;
 let volumeDial;
-synth.volume.value = -10;
+synth.volume.value = -15;
 let harmDial;
-synth.harmonicity.value = 0;
-
-
-
-osc.connect(ampEnv);
-ampEnv.connect(reverb);
+synth.harmonicity.value = 1;
 
 synth.connect(reverb);
 
