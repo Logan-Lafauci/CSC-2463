@@ -60,9 +60,9 @@ function preload(){
 
   volumeDial = Nexus.Add.Dial('#dial2',{
     'size': [100,100],
-    'min' : -20,
+    'min' : -30,
     'max' : 0,
-    'value' : -10
+    'value' : -15
   });
 
   harmDial = Nexus.Add.Dial('#dial3', {
@@ -74,7 +74,7 @@ function preload(){
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(200, 200);
 
   reverbDial.on('change', (v)=>{
     reverb.roomSize.value = v;
