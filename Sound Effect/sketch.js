@@ -5,7 +5,7 @@ let weather = true;
 //Synth for background music
 let synth = new Tone.PolySynth().toDestination();
 synth.set({ detune: -1200 });
-synth.volume.value = -8;
+synth.volume.value = -12;
 
 //transition noise
 let osc = new Tone.AMOscillator(400,'sine','sine').start()
@@ -18,9 +18,11 @@ let ampEnv = new Tone.AmplitudeEnvelope({
   release: 0.8
 }).connect(pan);
 osc.connect(ampEnv);
+osc.volume.value = -10;
 
 let freqLFO = new Tone.LFO(4,300,1000).start();
 freqLFO.connect(osc.frequency); 
+
 
 //rain sound effect
 let rain = new Tone.Noise('pink').start();
@@ -59,7 +61,7 @@ function setup() {
 
 function draw() {
   background(255);
-  text('Click mouse to change setting and music', 200, 820);
+  text('Click mouse to change setting and music. Then wait and enjoy.', 125, 820);
 
   Tone.start();
   sunGif.position(0,0);
