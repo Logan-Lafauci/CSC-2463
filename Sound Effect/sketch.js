@@ -5,7 +5,6 @@ let weather = true;
 //Synth for background music
 let synth = new Tone.PolySynth().toDestination();
 synth.set({ detune: -1200 });
-synth.volume.value = -12;
 
 //transition noise
 let osc = new Tone.AMOscillator(400,'sine','sine').start()
@@ -75,6 +74,7 @@ function draw() {
     windEnv.triggerAttack();
     if((frameCount % (60 * 8)) === 0)
     {
+      synth.volume.value = -12;
       synth.triggerAttackRelease(["C5", "E5", "A5"], 1.5);
       synth.triggerAttackRelease("C5", '4n', '+2');
       synth.triggerAttackRelease("E5", '4n', '+2.25');
@@ -99,6 +99,7 @@ function draw() {
     rainEnv.triggerAttack();
     if((frameCount % (60 * 11)) === 0)
     {
+      synth.volume.value = -12;
       synth.triggerAttackRelease(["C4", "E4", "A4"], 1.5);
       synth.triggerAttackRelease("G4", '2n', '+2');
       synth.triggerAttackRelease("E4", '2n', '+2.5');
@@ -117,4 +118,7 @@ function mousePressed() {
 
   weather = !weather;
   frameCount = 0;
+
+  //fadeout of the song when switching
+  synth.volume.rampTo(-50, 5);
 }
