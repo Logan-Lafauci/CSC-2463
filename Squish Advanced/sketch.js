@@ -3,33 +3,36 @@ let gameState = "wait";
 let bugs = [];
 let count;
 let score = 0;
-let speed = 0;
+let speed = 2;
 let direction = [-1, 1];
-let splat = new Tone.Player('splat.wav').toDestination();
-let miss = new Tone.Player('miss.wav').toDestination();
+let splat = new Tone.Player('splat.wav');
+let miss = new Tone.Player('miss.wav');
 
 let synth = new Tone.PolySynth().toDestination();
+synth.volume.value = -25;
 
 const test = [
   {'time': 0, 'note': ["C5", "E5", "A5"], 'duration': 1.5},
-  {'time': 0, 'note': "C5", 'duration': '4n'},
-  {'time': 0, 'note': "E5", 'duration': '4n'},
-  {'time': 0, 'note': "G5", 'duration': '4n'},
-  {'time': 0, 'note': "G5", 'duration': '4n'},
-  {'time': 0, 'note': "E5", 'duration': '4n'},
-  {'time': 0, 'note': "C5", 'duration': '4n'},
-  {'time': 0, 'note': ["C5", "E5", "A5"], 'duration': 1.5},
-  {'time': 0, 'note': "G5", 'duration': '4n'},
-  {'time': 0, 'note': "E5", 'duration': '4n'},
-  {'time': 0, 'note': "C5", 'duration': '4n'},
-  {'time': 0, 'note': "C5", 'duration': '4n'},
-  {'time': 0, 'note': "E5", 'duration': '4n'},
-  {'time': 0, 'note': "G5", 'duration': '4n'}
+  {'time': 2, 'note': "C5", 'duration': '4n'},
+  {'time': 2.25, 'note': "E5", 'duration': '4n'},
+  {'time': 2.5, 'note': "G5", 'duration': '4n'},
+  {'time': 3, 'note': "G5", 'duration': '4n'},
+  {'time': 3.25, 'note': "E5", 'duration': '4n'},
+  {'time': 3.5, 'note': "C5", 'duration': '4n'},
+  {'time': 4, 'note': ["C5", "E5", "A5"], 'duration': 1.5},
+  {'time': 6, 'note': "G5", 'duration': '4n'},
+  {'time': 6.25, 'note': "E5", 'duration': '4n'},
+  {'time': 6.5, 'note': "C5", 'duration': '4n'},
+  {'time': 7, 'note': "C5", 'duration': '4n'},
+  {'time': 7.25, 'note': "E5", 'duration': '4n'},
+  {'time': 7.5, 'note': "G5", 'duration': '4n'}
 ];
 
 const part = new Tone.Part(function(time, note) {
   synth.triggerAttackRelease(note.note, note.duration, time);
-}, test).start(0);
+}, test);
+
+Tone.Transport.start();
 
 function preload()
 {
@@ -39,6 +42,8 @@ function preload()
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  splat.toDestination();
+  miss.toDestination();
 
   for(i = 1; i <= 10; i++)
   {
@@ -56,6 +61,7 @@ function mouseClicked()
   for(i = 0; i < count; i++)
   {
     bugs[i].squish();
+    musicStart();
   }
 }
 
@@ -71,11 +77,11 @@ function draw() {
     if(mouseIsPressed){
       startTime = millis();
       gameState = "playing";
-      Tone.start();
     }
   }
   else if (gameState == "playing")
   {
+
     for(i = 0; i < count; i++)
     {
       bugs[i].draw();
@@ -87,6 +93,7 @@ function draw() {
     if(time >= 30)
     {
       gameState = "end";
+      part.stop();
     }
   }
   else if(gameState == "end")
@@ -100,14 +107,22 @@ function draw() {
       startTime = millis();
       gameState = "playing";
       score = 0;
-      speed = 6;
+      speed = 2;
       bugs.splice(0, (count - 10));
       for(i = 0; i < 10 ; i++)
       {
         bugs[i].alive = true;
       }
+      musicStart();
     }
   }
+}
+
+function musicStart()
+{
+  part.start();
+  part.loop = true;
+  part.loopEnd = 8;
 }
 
 class Bug
