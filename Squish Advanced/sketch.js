@@ -5,8 +5,8 @@ let count;
 let score = 0;
 let speed = 2;
 let direction = [-1, 1];
-let splat = new Tone.Player('splat.wav');
-let miss = new Tone.Player('miss.wav');
+let splat = new Tone.Player('sample/splat.wav');
+let miss = new Tone.Player('sample/miss.wav');
 
 let synth = new Tone.PolySynth().toDestination();
 synth.volume.value = -25;
