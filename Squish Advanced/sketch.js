@@ -71,6 +71,7 @@ function draw() {
     if(mouseIsPressed){
       startTime = millis();
       gameState = "playing";
+      Tone.start();
     }
   }
   else if (gameState == "playing")
