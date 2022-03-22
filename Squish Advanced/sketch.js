@@ -7,12 +7,14 @@ let speed = 2;
 let direction = [-1, 1];
 let sounds = new Tone.Players(
   {
-    'splat': 'splat.wav',
-    'miss': 'miss.wav'
+    'splat': 'sample/splat.wav',
+    'miss': 'sample/miss.wav'
   }
 );
 sounds.volume.value = -6;
 
+var gain = new Tone.Gain().toDestination();
+sounds.connect(gain);
 
 Tone.Transport.bpm.value = 120;
 
