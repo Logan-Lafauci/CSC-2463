@@ -5,7 +5,10 @@ let count;
 let score = 0;
 let speed = 2;
 let direction = [-1, 1];
-let splat = new Tone.Player('sample/splat.wav');
+let buffer = new Tone.Buffer('sample/splat.wav');
+let splat = new Tone.Player(buffer);
+splat.volume.value = -6;
+
 
 Tone.Transport.bpm.value = 120;
 
