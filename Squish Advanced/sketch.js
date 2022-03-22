@@ -7,8 +7,8 @@ let speed = 2;
 let direction = [-1, 1];
 let sounds = new Tone.Players(
   {
-    'splat': 'sample/splat.wav',
-    'miss': 'sample/miss.wav'
+    'splat': 'splat.wav',
+    'miss': 'miss.wav'
   }
 );
 sounds.volume.value = -6;
