@@ -5,9 +5,13 @@ let count;
 let score = 0;
 let speed = 2;
 let direction = [-1, 1];
-let buffer = new Tone.Buffer('sample/splat.wav');
-let splat = new Tone.Player(buffer);
-splat.volume.value = -6;
+let sounds = new Tone.Players(
+  {
+    'splat': 'sample/splat.wav',
+    'miss': 'sample/miss.wav'
+  }
+);
+sounds.volume.value = -6;
 
 
 Tone.Transport.bpm.value = 120;
@@ -52,7 +56,7 @@ function preload()
 function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
-  splat.toDestination();
+  sounds.toDestination();
 
   for(i = 1; i <= 10; i++)
   {
@@ -135,6 +139,11 @@ function draw() {
       gameOver.stop();
     }
   }
+}
+
+function playSample(sound)
+{
+  sounds.player(sound).start();
 }
 
 class Bug
@@ -233,9 +242,14 @@ class Bug
       score ++;
       speed += .25;
       bugs.push(new Bug(spriteSheet, random(100, width-100), random(100, height-100), random(direction), (random(-1,1))));
-      splat.start();
+      playSample('splat')
       Tone.Transport.bpm.value+= 3;
     }
+    else{
+      playSample('miss')
+    }
   }
+
+  
 
 }
