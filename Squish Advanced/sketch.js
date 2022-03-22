@@ -6,12 +6,13 @@ let score = 0;
 let speed = 2;
 let direction = [-1, 1];
 let splat = new Tone.Player('sample/splat.wav');
-let miss = new Tone.Player('sample/miss.wav');
+
+Tone.Transport.bpm.value = 120;
 
 let synth = new Tone.PolySynth().toDestination();
 synth.volume.value = -25;
 
-const test = [
+const over = [
   {'time': 0, 'note': ["C5", "E5", "A5"], 'duration': 1.5},
   {'time': 2, 'note': "C5", 'duration': '4n'},
   {'time': 2.25, 'note': "E5", 'duration': '4n'},
@@ -28,9 +29,15 @@ const test = [
   {'time': 7.5, 'note': "G5", 'duration': '4n'}
 ];
 
-const part = new Tone.Part(function(time, note) {
+const gameOver = new Tone.Part(function(time, note) {
   synth.triggerAttackRelease(note.note, note.duration, time);
-}, test);
+}, over);
+
+let gameMusic = new Tone.Sequence((time, note) => {
+  if(note != null) {
+    synth.triggerAttackRelease(note, .25, time + 0.1);
+  }
+}, ['C4', 'C4', 'F4', 'G4', 'G4', 'C4', 'E3', 'E3', 'D4', 'C4', 'D3', 'D4']);
 
 Tone.Transport.start();
 
@@ -43,7 +50,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
   splat.toDestination();
-  miss.toDestination();
 
   for(i = 1; i <= 10; i++)
   {
@@ -60,8 +66,8 @@ function mouseClicked()
 {
   for(i = 0; i < count; i++)
   {
-    bugs[i].squish();
-    musicStart();
+    if(gameState == "playing")
+      bugs[i].squish();
   }
 }
 
@@ -75,12 +81,14 @@ function draw() {
     textSize(30);
     text('Click to start', (width/2 - 150) , 300);
     if(mouseIsPressed){
+      Tone.start();
       startTime = millis();
       gameState = "playing";
     }
   }
   else if (gameState == "playing")
   {
+    gameMusic.start("+.25");
 
     for(i = 0; i < count; i++)
     {
@@ -92,18 +100,26 @@ function draw() {
     text("Score: " +  score, width - 150, 30);
     if(time >= 30)
     {
+      //sets game to end state 
       gameState = "end";
-      part.stop();
+      startTime = millis();
+      Tone.Transport.bpm.value = 120;
+      gameOver.start("+.25");
+      gameOver.loop = true;
+      gameOver.loopEnd = 8;
     }
   }
   else if(gameState == "end")
   {
+    gameMusic.stop();
+
+    let time = timer();
     text('game over', (width/2 - 50), 300);
     text('Score: ' + score, (width/2 - 45), 350);
     text('Click to play again', (width/2 - 100), 400);
 
     //reset the game 
-    if(mouseIsPressed){
+    if(mouseIsPressed && time >= 2){
       startTime = millis();
       gameState = "playing";
       score = 0;
@@ -113,16 +129,9 @@ function draw() {
       {
         bugs[i].alive = true;
       }
-      musicStart();
+      gameOver.stop();
     }
   }
-}
-
-function musicStart()
-{
-  part.start();
-  part.loop = true;
-  part.loopEnd = 8;
 }
 
 class Bug
@@ -222,12 +231,8 @@ class Bug
       speed += .25;
       bugs.push(new Bug(spriteSheet, random(100, width-100), random(100, height-100), random(direction), (random(-1,1))));
       splat.start();
+      Tone.Transport.bpm.value+= 3;
     }
-    else
-    {
-      // miss.start();
-    }
-    
   }
 
 }
