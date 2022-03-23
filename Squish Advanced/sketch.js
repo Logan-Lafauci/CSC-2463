@@ -249,8 +249,8 @@ class Bug
       score ++;
       speed += .25;
       bugs.push(new Bug(spriteSheet, random(100, width-100), random(100, height-100), random(direction), (random(-1,1))));
-      playSample('splat');
       Tone.Transport.bpm.value+= 3;
+      playSample('splat');
     }
   }
 }
