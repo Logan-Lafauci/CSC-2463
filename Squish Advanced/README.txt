@@ -1,1 +1,1 @@
-The code works fine when using http-server but the samples won't load and bpm won't increase on GitHub pages.
+The code works fine when using http-server but the samples won't load on GitHub pages. I've tried to fix it by using Tone.buffer but the problem remains.
