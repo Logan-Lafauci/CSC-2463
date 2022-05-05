@@ -91,7 +91,7 @@ function keyReleased()
 {
   if(key == '1' && score >= Math.floor(addCost))
   {
-    playSample('register');
+    //playSample('register');
     coins.push(new Coin(spriteSheet, random(100, width-100), random(100, height-100), random(direction), (random(-1,1))));
     speed += .5;
     score -= Math.floor(addCost);
@@ -100,7 +100,7 @@ function keyReleased()
   }
   if(key == '2' && score >= Math.floor(timeCost))
   {
-    playSample('register');
+    //playSample('register');
     timeLeft += 10;
     score -= Math.floor(timeCost);
     timeCost *= 1.25;
@@ -108,7 +108,7 @@ function keyReleased()
   }
   if(key == '3' && score >= Math.floor(multCost))
   {
-    playSample('register');
+    //playSample('register');
     multiplier *= 1.25;
     speed += .25;
     score -= Math.floor(multCost);
@@ -117,7 +117,7 @@ function keyReleased()
   }
   if(key == '4' && score >= Math.floor(moveCost))
   {
-    playSample('register');
+    //playSample('register');
     thePlayer.addSpeed();
     score -= Math.floor(moveCost);
     moveCost *= 1.75;
@@ -305,7 +305,7 @@ class Player
 
   addSpeed()
   {
-    this.playerSpeed += .15;
+    this.playerSpeed += .075;
   }
 }
 
@@ -365,7 +365,7 @@ class Coin
   {
     if((control.x >= this.x - 40 && control.x <= this.x + 40) && (control.y >= this.y - 50 && control.y <= this.y + 50))
     {
-      playSample('collect');
+      //playSample('collect');
       score += Math.ceil(multiplier);
       totalScore += Math.ceil(multiplier);
       this.x = random(100, width-100);
