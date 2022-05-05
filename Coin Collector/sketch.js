@@ -108,7 +108,7 @@ function keyReleased()
   }
   if(key == '3' && score >= Math.floor(multCost))
   {
-    //playSample('register');
+   // playSample('register');
     multiplier *= 1.25;
     speed += .25;
     score -= Math.floor(multCost);
@@ -131,8 +131,12 @@ function draw() {
 
   if(gameState == "wait")
   {
+    textSize(50);
+    fill(246, 234, 63);
+    text('Coin Collector', (width/2 - 150) , 300);
+    fill(0);
     textSize(30);
-    text('Click to start', (width/2 - 150) , 300);
+    text('Push Joystick To Start', (width/2 - 140) , 350);
     if(sensor.button){
       Tone.start();
       startTime = millis();
